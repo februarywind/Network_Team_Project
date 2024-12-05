@@ -22,6 +22,9 @@ public class LoginPanel1 : MonoBehaviour
         GameManager.UserSetting.LoadSetting();
         emaillInput.text = GameManager.UserSetting.Data.email;
 
+        // 내부 테스트용: 패스워드 미사용
+        passwordInput.interactable = false;
+
         GameManager.Sound.PlayBGM(titleBgm, 0.2f);
 
         Camera.main.GetComponent<CameraController2>().enabled = false;
