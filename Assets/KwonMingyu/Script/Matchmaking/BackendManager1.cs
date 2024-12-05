@@ -80,7 +80,7 @@ public class BackendManager1 : MonoBehaviour
                 return;
             }
 
-            if (task.Result.Value == null)
+            if (task.Result.Child("name").Value == null)
             {
                 userData.name = $"Player {Random.Range(1000, 9999)}";
                 userData.level = 1;
@@ -132,7 +132,8 @@ public class BackendManager1 : MonoBehaviour
 
     public void UserInitAndDeviceCheck()
     {
-        userUidDataRef = Database.RootReference.Child("UserData").Child(Auth.CurrentUser.UserId);
+        // 내부 테스트용: UID 대신 닉네임 사용
+        userUidDataRef = Database.RootReference.Child("UserData").Child(PhotonNetwork.NickName);
 
         // 현재 로그인한 디바이스를 DB에 등록 후 값 변경시 비교
         DatabaseReference deviceDataRef = GameManager.Backend.userUidDataRef.Child("Device");

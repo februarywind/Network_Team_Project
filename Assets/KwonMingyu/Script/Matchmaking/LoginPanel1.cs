@@ -32,34 +32,11 @@ public class LoginPanel1 : MonoBehaviour
     public void Login()
     {
         PopUp1.Instance.PopUpOpen(true, "로그인 중");
-        string email = emaillInput.text;
-        string password = passwordInput.text;
-        BackendManager1.Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted)
-            {
-                PopUp1.Instance.PopUpOpen(false, "로그인 실패");
-                return;
-            }
-            if (BackendManager1.Auth.CurrentUser.IsEmailVerified)
-            {
-                // 로그인 성공시 이메일 저장
-                GameManager.UserSetting.Data.email = email;
-                GameManager.UserSetting.SaveSetting();
 
-                // 중복 로그인 방지 기능
-                BackendManager1.Instance.UserInitAndDeviceCheck();
-
-                // 게임 진행은 문제가 없지만 닉네임을 서버에서 받기 때문에
-                Debug.Log("로그인 성공 마스터 서버로 연결");
-                PhotonNetwork.ConnectUsingSettings();
-            }
-            else
-            {
-                Debug.Log("로그인 성공 인증 화면으로 이동");
-                verifyPanel.gameObject.SetActive(true);
-            }
-        });
+        // 내부 테스트용: 인증 대신 닉네임 사용
+        PhotonNetwork.NickName = emaillInput.text;
+        GameManager.Backend.UserInitAndDeviceCheck();
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     static 
