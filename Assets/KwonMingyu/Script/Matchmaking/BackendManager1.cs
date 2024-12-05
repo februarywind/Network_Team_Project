@@ -143,7 +143,7 @@ public class BackendManager1 : MonoBehaviour
 
     private void DeviceDataValueChanged(object sender, ValueChangedEventArgs args)
     {
-        if (SystemInfo.deviceUniqueIdentifier != args.Snapshot.Value.ToString())
+        if (args.Snapshot.Value != null && SystemInfo.deviceUniqueIdentifier != args.Snapshot.Value.ToString())
         {
             Debug.Log("중복 로그인 감지");
             PhotonNetwork.Disconnect();
