@@ -13,6 +13,7 @@ public enum UserDatas1
 
 public class UserData1
 {
+    public string Device;
     public string name;
     public long level;
 }
@@ -80,9 +81,11 @@ public class BackendManager1 : MonoBehaviour
                 return;
             }
 
-            if (task.Result.Child("name").Value == null)
+            JsonUtility.FromJsonOverwrite(task.Result.GetRawJsonValue(), userData);
+
+            if (userData.name == null)
             {
-                userData.name = $"Player {Random.Range(1000, 9999)}";
+                userData.name = PhotonNetwork.NickName;
                 userData.level = 1;
 
                 string json = JsonUtility.ToJson(userData);
